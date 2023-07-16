@@ -1,0 +1,19 @@
+extend type Query {
+    products: [Product!]! @paginate
+    product(id: ID! @eq): Product @find
+    searchProduct(filter: String): [Product]!
+}
+
+extend type Mutation {
+    createProduct(name: String!, price: Float!, quantity: Int): Product @create
+    updateProduct(id: ID!, name: String, price: Float, quantity: Int): Product
+        @update
+    deleteProduct(id: ID!): Product @delete
+}
+
+type Product {
+    id: ID!
+    name: String!
+    price: Float!
+    quantity: Int
+}
