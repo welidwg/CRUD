@@ -14,7 +14,7 @@ export default function AddProduct(props) {
             console.log(err);
             Swal.fire(
                 "Oops!",
-                "An error has accured ! <br> message:" + err.message,
+                "une erreur s’est produite ! <br> message:" + err.message,
                 "error"
             );
         },
@@ -36,17 +36,14 @@ export default function AddProduct(props) {
             onCompleted: (res) => {
                 e.target.reset();
                 Swal.fire(
-                    "Success",
-                    "Product was successfully added",
+                    "Succès",
+                    "Produit est ajouté avec succès",
                     "success"
                 );
             },
         });
     }
 
-    useEffect(() => {
-        console.log(prodData);
-    }, [prodData]);
     return (
         <form
             className="row g-3 needs-validation text-dark"
@@ -54,10 +51,10 @@ export default function AddProduct(props) {
                 handleSubmit(e);
             }}
         >
-            <h5>New product</h5>
+            <h5>Nouveau produit</h5>
             <div className="col-md-4">
                 <label htmlFor="validationCustom01" className="form-label">
-                    Product name
+                    Nom du produit
                 </label>
                 <input
                     type="text"
@@ -68,11 +65,10 @@ export default function AddProduct(props) {
                         handleChange(e);
                     }}
                 />
-                <div className="valid-feedback">Looks good!</div>
             </div>
             <div className="col-md-4">
                 <label htmlFor="validationCustom02" className="form-label">
-                    Unit Price
+                    Prix unitaire
                 </label>
                 <input
                     type="number"
@@ -84,11 +80,10 @@ export default function AddProduct(props) {
                         handleChange(e);
                     }}
                 />
-                <div className="valid-feedback">Looks good!</div>
             </div>
             <div className="col-md-4">
                 <label htmlFor="validationCustom02" className="form-label">
-                    Quantity
+                    quantité
                 </label>
                 <input
                     type="number"
@@ -99,12 +94,11 @@ export default function AddProduct(props) {
                         handleChange(e);
                     }}
                 />
-                <div className="valid-feedback">Looks good!</div>
             </div>
 
             <div className="col-12">
                 <button className="btn btn-primary float-end " type="submit">
-                    Add
+                    Ajouter
                 </button>
             </div>
         </form>

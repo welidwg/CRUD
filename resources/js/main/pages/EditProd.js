@@ -10,7 +10,7 @@ export default function EditProd() {
     const GetProd = useQuery(GetProductQuery, {
         variables: { id: parseInt(params.id) },
         onCompleted: (res) => {
-            console.log(res);
+            // console.log(res);
         },
         onError: (err) => {
             console.log(err);
@@ -40,12 +40,12 @@ export default function EditProd() {
         update_prod({
             variables: updateData,
             onCompleted: (res) => {
-                Swal.fire("Success!", "Product saved", "success");
+                Swal.fire("Succès!", "Produit enregistré", "success");
             },
             onError: (err) => {
                 Swal.fire(
                     "Oops!",
-                    "An error has accured ! <br> message:" + err.message,
+                    "une erreur s’est produite ! <br> message:" + err.message,
                     "error"
                 );
             },
@@ -71,23 +71,23 @@ export default function EditProd() {
             }}
         >
             {GetProd.loading ? (
-                <div class="d-flex justify-content-center align-items-center">
+                <div className="d-flex justify-content-center align-items-center">
                     <div
-                        class="spinner-border text-primary spinner-border-sm"
+                        className="spinner-border text-primary spinner-border-sm"
                         role="status"
                     >
-                        <span class="visually-hidden">Loading...</span>
+                        <span className="visually-hidden">Loading...</span>
                     </div>
                 </div>
             ) : GetProd.data.product != null ? (
                 <>
-                    <h5>Edit {GetProd.data.product.name}</h5>
+                    <h5>Modifier {GetProd.data.product.name}</h5>
                     <div className="col-md-4">
                         <label
                             htmlFor="validationCustom01"
                             className="form-label"
                         >
-                            Product name
+                            Nom du produit
                         </label>
                         <input
                             type="text"
@@ -106,7 +106,7 @@ export default function EditProd() {
                             htmlFor="validationCustom02"
                             className="form-label"
                         >
-                            Unit Price
+                            Prix unitaire
                         </label>
                         <input
                             type="number"
@@ -125,7 +125,7 @@ export default function EditProd() {
                             htmlFor="validationCustom02"
                             className="form-label"
                         >
-                            Quantity
+                            quantité
                         </label>
                         <input
                             type="number"
@@ -143,12 +143,12 @@ export default function EditProd() {
                             className="btn btn-primary float-end "
                             type="submit"
                         >
-                            Save
+                            Enregistrer
                         </button>
                     </div>
                 </>
             ) : (
-                <> PRODUCT NOT FOUND</>
+                <> Produit introuvable</>
             )}
         </form>
     );

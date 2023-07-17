@@ -1,12 +1,18 @@
 import { gql } from "@apollo/client";
 
 export const ProductsQuery = gql`
-    query ProductsQuery($filter: String!) {
-        searchProduct(filter: $filter) {
-            id
-            name
-            price
-            quantity
+    query ProductsQuery($filter: String!, $first: Int!, $page: Int!) {
+        searchproduct(filter: $filter, first: $first, page: $page) {
+            data {
+                id
+                name
+                price
+                quantity
+            }
+            paginatorInfo {
+                hasMorePages
+                total
+            }
         }
     }
 `;

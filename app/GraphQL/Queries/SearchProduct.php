@@ -3,8 +3,9 @@
 namespace App\GraphQL\Queries;
 
 use App\Models\Product;
+use GraphQL\Error\Error;
 
-final class SearchProduct
+final class Searchproduct
 {
     /**
      * @param  null  $_
@@ -12,8 +13,12 @@ final class SearchProduct
      */
     public function __invoke($_, array $args)
     {
-        $filter = $args["filter"];
-        $prods = Product::where("name", "like", "%$filter%")->get();
-        return $prods;
+        try {
+            $filter = $args["filter"];
+            $prods = Product::where("name", "like", "%$filter%")->paginate($args["first"], ['*'], 'page', $args['page']);
+            return $prods;
+        } catch (\Throwable $th) {
+            return new Error($th->getMessage());
+        }
     }
 }

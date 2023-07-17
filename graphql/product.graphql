@@ -1,7 +1,8 @@
 extend type Query {
     products: [Product!]! @paginate
     product(id: ID! @eq): Product @find
-    searchProduct(filter: String): [Product]!
+    searchproduct(filter: String): [Product]!
+        @paginate(resolver: "App\\GraphQL\\Queries\\Searchproduct")
 }
 
 extend type Mutation {

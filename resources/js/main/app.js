@@ -2,7 +2,7 @@ import { React } from "react";
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import Main from "./pages/main";
-import { Routes, Route } from "react-router";
+import { Routes, Route, Navigate } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { createUploadLink } from "apollo-upload-client";
@@ -22,7 +22,11 @@ root.render(
         <ApolloProvider client={client}>
             <Layout>
                 <Routes>
-                    <Route path="/" element={<Main />} />
+                    <Route
+                        path="/"
+                        element={<Navigate replace to={"/main/1"} />}
+                    />
+                    <Route path="/main/:page" element={<Main />} />
                     <Route path="/product/add" element={<AddProduct />} />
                     <Route path="/product/edit/:id" element={<EditProd />} />
                 </Routes>
