@@ -5,6 +5,7 @@ To start using this project , first download `composer` and `npm` and install th
 
 -   composer install
 -   npm install
+-   php artisan migrate
 -   php artisan serve
 -   npx mix watch
 

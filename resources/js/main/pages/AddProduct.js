@@ -9,6 +9,7 @@ export default function AddProduct(props) {
         price: 0,
         quantity: 0,
     });
+
     const [add_prod] = useMutation(AddProductMutaion, {
         onError: (err) => {
             console.log(err);
@@ -19,6 +20,7 @@ export default function AddProduct(props) {
             );
         },
     });
+
     function handleChange(e) {
         if (e.target.name !== "name") {
             setProdData({
@@ -29,6 +31,7 @@ export default function AddProduct(props) {
             setProdData({ ...prodData, [e.target.name]: e.target.value });
         }
     }
+
     function handleSubmit(e) {
         e.preventDefault();
         add_prod({
@@ -83,7 +86,7 @@ export default function AddProduct(props) {
             </div>
             <div className="col-md-4">
                 <label htmlFor="validationCustom02" className="form-label">
-                    quantité
+                    Quantité
                 </label>
                 <input
                     type="number"

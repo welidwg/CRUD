@@ -1,28 +1,23 @@
 import { useMutation, useQuery } from "@apollo/client";
-import Layout from "../components/layout";
 import { ProductsQuery } from "../../graphql/queries";
 import { DeleteProductMutation } from "../../graphql/mutations";
 import { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
-import EditProd from "./EditProd";
 
 export default function Main(props) {
-    const page_size = 5;
-    // const [page, setPage] = useState(1);
     const params = useParams("page");
+    const page_size = 5;
     const page = parseInt(params.page);
 
     const ProductsQ = useQuery(ProductsQuery, {
         variables: { filter: "", first: page_size, page: page },
-        onCompleted: (res) => {
-            console.log("done");
-        },
+        onCompleted: (res) => {},
         onError: (err) => {
             console.log(err);
         },
     });
+
     const [delete_prod] = useMutation(DeleteProductMutation);
-    const [search, setSearch] = useState("");
     function handleDelete(id) {
         delete_prod({
             variables: { id: id },
@@ -34,9 +29,12 @@ export default function Main(props) {
             },
         });
     }
+
+    const [search, setSearch] = useState("");
     function handleSearch(e) {
         ProductsQ.refetch({ filter: search, first: page_size });
     }
+
     var typingTimer;
     var doneTypingInterval = 1000;
 
@@ -86,79 +84,85 @@ export default function Main(props) {
                     </thead>
                     <tbody>
                         {ProductsQ.loading ? (
-                            <tr key="">
+                            <tr>
                                 <td>
                                     <div className="d-flex justify-content-center align-items-center">
                                         <div
                                             className="spinner-border text-primary spinner-border-sm"
                                             role="status"
-                                        >
-                                            <span className="visually-hidden">
-                                                Loading...
-                                            </span>
-                                        </div>
+                                        ></div>
                                     </div>
                                 </td>
                             </tr>
                         ) : ProductsQ.data != undefined ? (
-                            ProductsQ.data.searchproduct.data.map(
-                                (prod, index) => {
-                                    return (
-                                        <tr key={index}>
-                                            <th scope="row">{prod.id}</th>
-                                            <td>{prod.name}</td>
-                                            <td>{prod.price}</td>
-                                            <td>{prod.quantity}</td>
-                                            <td>
-                                                <div className="d-flex  flex-row justify-content-start align-items-center">
-                                                    {" "}
-                                                    <NavLink
-                                                        className="text-primary fw-bold mx-3"
-                                                        style={{
-                                                            textDecoration:
-                                                                "none",
-                                                        }}
-                                                        to={
-                                                            "/product/edit/" +
-                                                            prod.id
-                                                        }
-                                                    >
-                                                        Modifier
-                                                    </NavLink>
-                                                    <a
-                                                        className="text-danger fw-bold fs-4"
-                                                        onClick={(e) => {
-                                                            handleDelete(
+                            ProductsQ.data.searchproduct.data.length == 0 ? (
+                                <tr>
+                                    <td>Aucun enregistrement</td>
+                                </tr>
+                            ) : (
+                                ProductsQ.data.searchproduct.data.map(
+                                    (prod, index) => {
+                                        return (
+                                            <tr key={index}>
+                                                <th scope="row">{prod.id}</th>
+                                                <td>{prod.name}</td>
+                                                <td>{prod.price}</td>
+                                                <td>{prod.quantity}</td>
+                                                <td>
+                                                    <div className="d-flex  flex-row justify-content-start align-items-center">
+                                                        <NavLink
+                                                            className="text-primary fw-bold mx-3"
+                                                            style={{
+                                                                textDecoration:
+                                                                    "none",
+                                                            }}
+                                                            to={
+                                                                "/product/edit/" +
                                                                 prod.id
-                                                            );
-                                                        }}
-                                                        style={{
-                                                            textDecoration:
-                                                                "none",
-                                                        }}
-                                                    >
-                                                        &times;
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    );
-                                }
+                                                            }
+                                                        >
+                                                            Modifier
+                                                        </NavLink>
+
+                                                        <a
+                                                            className="text-danger fw-bold fs-4"
+                                                            onClick={(e) => {
+                                                                handleDelete(
+                                                                    prod.id
+                                                                );
+                                                            }}
+                                                            style={{
+                                                                textDecoration:
+                                                                    "none",
+                                                            }}
+                                                        >
+                                                            &times;
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        );
+                                    }
+                                )
                             )
                         ) : ProductsQ.error ? (
                             <tr>
                                 <td> {ProductsQ.error.message} </td>
                             </tr>
                         ) : (
-                            <tr>
-                                <th>Aucun enregistrement</th>
-                            </tr>
+                            <>
+                                <tr>
+                                    <td> Erreur inconnue </td>
+                                </tr>
+                            </>
                         )}
                     </tbody>
                 </table>
+
+                {/* pagination */}
                 {!ProductsQ.loading ? (
                     <nav aria-label="Page navigation">
-                        <ul className="pagination    ">
+                        <ul className="pagination">
                             <li
                                 className={`page-item ${
                                     page == 1 ? "disabled" : ""
@@ -167,11 +171,11 @@ export default function Main(props) {
                                 <NavLink
                                     className="page-link"
                                     to={`/main/${page - 1}`}
-                                    aria-label="Previous"
                                 >
                                     <span aria-hidden="true">&laquo;</span>
                                 </NavLink>
                             </li>
+
                             {(() => {
                                 let no =
                                     ProductsQ.data.searchproduct.paginatorInfo
@@ -195,6 +199,7 @@ export default function Main(props) {
                                 }
                                 return items;
                             })()}
+
                             <li className="page-item">
                                 <NavLink
                                     className={`page-link ${
@@ -204,7 +209,6 @@ export default function Main(props) {
                                             : "disabled"
                                     }`}
                                     to={`/main/${page + 1}`}
-                                    aria-label="Next"
                                 >
                                     <span aria-hidden="true">&raquo;</span>
                                 </NavLink>
