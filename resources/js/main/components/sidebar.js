@@ -20,7 +20,7 @@ export default function Sidebar(props) {
                         <NavLink className={"nav-link  "} to={"/main/1"}>
                             {" "}
                             <span className="ms-1 d-none d-sm-inline">
-                                Listes des produits
+                                Liste des produits
                             </span>
                         </NavLink>
                     </li>

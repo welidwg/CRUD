@@ -6624,7 +6624,7 @@ function Sidebar(props) {
             to: "/main/1",
             children: [" ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
               className: "ms-1 d-none d-sm-inline",
-              children: "Listes des produits"
+              children: "Liste des produits"
             })]
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("li", {
